@@ -1,0 +1,5 @@
+.idea/ 
+backend/.idea/ 
+*.iml 
+backend/target/ 
+frontend/node_modules/
