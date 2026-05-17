@@ -8,6 +8,7 @@ const mainLinks = [
 ]
 
 const cadastroLinks = [
+  { to: '/cadastros/usuarios',   label: 'Usuários'   },
   { to: '/cadastros/tecnicos',   label: 'Técnicos'   },
   { to: '/cadastros/municipios', label: 'Municípios' },
   { to: '/cadastros/unidades',   label: 'Unidades'   },
@@ -111,9 +112,20 @@ export default function Sidebar() {
 
       </nav>
 
-      {/* Footer */}
-      <div className="px-6 py-4 border-t border-slate-700/40">
+      {/* Footer com botão de sair */}
+      <div className="px-6 py-4 border-t border-slate-700/40 flex items-center justify-between">
         <p className="text-xs text-slate-600 font-mono">v1.0.0</p>
+        <button
+          onClick={() => {
+            if (window.confirm('Deseja realmente sair do sistema?')) {
+              localStorage.clear() // Limpa o token e dados salvos no login
+              window.location.href = '/login' // Redireciona de forma bruta para reiniciar o estado do App
+            }
+          }}
+          className="text-xs text-red-400/70 hover:text-red-400 font-medium font-mono cursor-pointer transition-all duration-200"
+        >
+          [ Sair ]
+        </button>
       </div>
     </aside>
   )
