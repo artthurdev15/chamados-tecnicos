@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  // Coloque o endereço completo do seu backend Java!
+  baseURL: 'http://localhost:8080/api', 
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
 })

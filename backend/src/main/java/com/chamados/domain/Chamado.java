@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "chamados", indexes = {
-    @Index(name = "idx_chamado_tecnico",       columnList = "tecnico_id"),
-    @Index(name = "idx_chamado_status",         columnList = "status"),
-    @Index(name = "idx_chamado_data_conclusao", columnList = "data_conclusao")
+        @Index(name = "idx_chamado_tecnico",       columnList = "tecnico_id"),
+        @Index(name = "idx_chamado_status",         columnList = "status"),
+        @Index(name = "idx_chamado_data_conclusao", columnList = "data_conclusao")
 })
 @Getter
 @Setter
@@ -25,6 +25,9 @@ public class Chamado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "numero_chamado", nullable = false, unique = true, length = 50)
+    private String numeroChamado;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "unidade_id", nullable = false)

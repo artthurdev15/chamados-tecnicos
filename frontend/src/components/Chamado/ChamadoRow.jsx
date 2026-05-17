@@ -26,26 +26,36 @@ export default function ChamadoRow({ chamado, onResolved }) {
 
   return (
     <tr className="border-b border-slate-800/60 hover:bg-slate-800/30 transition-colors group">
+
+      {/* Número do chamado — digitado pelo usuário */}
       <td className="px-4 py-3">
-        <span className="font-mono text-xs text-slate-500">#{chamado.id}</span>
+        <span className="font-mono text-sm font-semibold text-brand-400">
+          {chamado.numeroChamado}
+        </span>
+        <p className="font-mono text-xs text-slate-600 mt-0.5">id #{chamado.id}</p>
       </td>
+
       <td className="px-4 py-3">
         <p className="text-sm font-medium text-slate-200">{chamado.unidade.nome}</p>
         <p className="text-xs text-slate-500">{chamado.unidade.municipio.nome}</p>
       </td>
+
       <td className="px-4 py-3">
         <p className="text-sm text-slate-300">{chamado.tecnico.nome}</p>
       </td>
+
       <td className="px-4 py-3">
         <span className="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded-md">
           {categoriaLabel}
         </span>
       </td>
+
       <td className="px-4 py-3 max-w-[220px]">
         <p className="text-sm text-slate-400 truncate" title={chamado.descricao}>
           {chamado.descricao}
         </p>
       </td>
+
       <td className="px-4 py-3">
         <p className="text-xs text-slate-400 font-mono">
           {formatDateTime(chamado.dataSolicitacao)}
@@ -56,11 +66,13 @@ export default function ChamadoRow({ chamado, onResolved }) {
           </p>
         )}
       </td>
+
       <td className="px-4 py-3">
         <Badge variant={chamado.status === 'RESOLVIDO' ? 'resolvido' : 'pendente'}>
           {chamado.status === 'RESOLVIDO' ? '✓ Resolvido' : '● Pendente'}
         </Badge>
       </td>
+
       <td className="px-4 py-3">
         {chamado.status === 'PENDENTE' && (
           <Button

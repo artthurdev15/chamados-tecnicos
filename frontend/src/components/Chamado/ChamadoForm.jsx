@@ -12,7 +12,12 @@ export default function ChamadoForm({ onSuccess, onCancel }) {
   const [unidades,   setUnidades]   = useState([])
   const [tecnicos,   setTecnicos]   = useState([])
   const [form, setForm] = useState({
-    municipioId: '', unidadeId: '', tecnicoId: '', categoria: '', descricao: '',
+    numeroChamado: '',
+    municipioId:   '',
+    unidadeId:     '',
+    tecnicoId:     '',
+    categoria:     '',
+    descricao:     '',
   })
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState('')
@@ -38,15 +43,18 @@ export default function ChamadoForm({ onSuccess, onCancel }) {
     setForm((f) => ({ ...f, [field]: e.target.value }))
 
   const handleSubmit = async () => {
-    const { unidadeId, tecnicoId, categoria, descricao } = form
-    if (!unidadeId || !tecnicoId || !categoria || !descricao.trim()) {
-      setError('Preencha todos os campos obrigatórios.')
-      return
-    }
+    const { numeroChamado, unidadeId, tecnicoId, categoria, descricao } = form
+    if (!numeroChamado.trim()) { setError('O número do chamado é obrigatório.'); return }
+    if (!unidadeId)            { setError('Selecione uma unidade.'); return }
+    if (!tecnicoId)            { setError('Selecione um técnico.'); return }
+    if (!categoria)            { setError('Selecione uma categoria.'); return }
+    if (!descricao.trim())     { setError('A descrição é obrigatória.'); return }
+
     setLoading(true)
     setError('')
     try {
       await chamadoService.abrir({
+        numeroChamado,
         unidadeId: Number(unidadeId),
         tecnicoId: Number(tecnicoId),
         categoria,
@@ -67,6 +75,21 @@ export default function ChamadoForm({ onSuccess, onCancel }) {
           {error}
         </div>
       )}
+
+      {/* Número do chamado — campo em destaque */}
+      <div>
+        <label className="label-base">Número do Chamado *</label>
+        <input
+          className="input-base font-mono"
+          placeholder="Ex: 78764, OS-2025-001, TKT-456"
+          value={form.numeroChamado}
+          onChange={set('numeroChamado')}
+          autoFocus
+        />
+        <p className="text-xs text-slate-600 mt-1">
+          Identificador único — pode ser o número do ticket do sistema externo.
+        </p>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         <Select

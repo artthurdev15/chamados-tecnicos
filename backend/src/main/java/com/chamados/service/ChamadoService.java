@@ -45,7 +45,12 @@ public class ChamadoService {
             throw new BusinessException("Não é possível atribuir chamado a um técnico inativo.");
         }
 
+        if (chamadoRepository.existsByNumeroChamado(dto.numeroChamado())) {
+            throw new BusinessException("Já existe um chamado com o número: " + dto.numeroChamado());
+        }
+
         Chamado chamado = Chamado.builder()
+                .numeroChamado(dto.numeroChamado())
             .tecnico(tecnico)
             .unidade(unidade)
             .categoria(dto.categoria())

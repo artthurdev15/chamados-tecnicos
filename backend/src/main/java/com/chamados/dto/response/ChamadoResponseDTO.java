@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 public record ChamadoResponseDTO(
     Long id,
+    String numeroChamado,
     UnidadeResponseDTO unidade,
     TecnicoResponseDTO tecnico,
     LocalDateTime dataSolicitacao,

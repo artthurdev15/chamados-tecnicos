@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
 
+    boolean existsByNumeroChamado(String numeroChamado);
+
     @Query("""
         SELECT c FROM Chamado c
         JOIN FETCH c.tecnico t
@@ -31,10 +33,10 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
         JOIN FETCH c.tecnico t
         JOIN FETCH c.unidade u
         JOIN FETCH u.municipio
-        WHERE c.status = 'RESOLVIDO'
+        WHERE c.status = com.chamados.domain.enums.StatusChamado.RESOLVIDO
           AND t.id = :tecnicoId
-          AND FUNCTION('MONTH', c.dataConclusao) = :mes
-          AND FUNCTION('YEAR',  c.dataConclusao) = :ano
+          AND EXTRACT(MONTH FROM c.dataConclusao) = :mes
+          AND EXTRACT(YEAR  FROM c.dataConclusao) = :ano
         ORDER BY c.dataConclusao ASC
     """)
     List<Chamado> findResolvidosByTecnicoAndMesAno(
@@ -45,10 +47,10 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
 
     @Query("""
         SELECT COUNT(c) FROM Chamado c
-        WHERE c.status = 'RESOLVIDO'
+        WHERE c.status = com.chamados.domain.enums.StatusChamado.RESOLVIDO
           AND c.tecnico.id = :tecnicoId
-          AND FUNCTION('MONTH', c.dataConclusao) = :mes
-          AND FUNCTION('YEAR',  c.dataConclusao) = :ano
+          AND EXTRACT(MONTH FROM c.dataConclusao) = :mes
+          AND EXTRACT(YEAR  FROM c.dataConclusao) = :ano
     """)
     int countResolvidosByTecnicoAndMesAno(
         @Param("tecnicoId") Long tecnicoId,

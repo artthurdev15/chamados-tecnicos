@@ -1,7 +1,7 @@
 package com.chamados.controller;
 
-import com.chamados.domain.enums.StatusChamado;
 import com.chamados.dto.request.ChamadoRequestDTO;
+import com.chamados.domain.enums.StatusChamado;
 import com.chamados.dto.response.ChamadoResponseDTO;
 import com.chamados.service.ChamadoService;
 import io.swagger.v3.oas.annotations.Operation;

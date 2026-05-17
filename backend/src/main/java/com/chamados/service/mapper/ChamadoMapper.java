@@ -28,6 +28,7 @@ public class ChamadoMapper {
     public ChamadoResponseDTO toChamadoDTO(Chamado c) {
         return new ChamadoResponseDTO(
             c.getId(),
+            c.getNumeroChamado(),
             toUnidadeDTO(c.getUnidade()),
             toTecnicoDTO(c.getTecnico()),
             c.getDataSolicitacao(),
